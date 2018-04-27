@@ -1,0 +1,13 @@
+syntax = "proto2";
+
+package student;
+
+option java_package = "com.shiluns.netty.rpc.protobuf";
+option java_outer_classname = "DataInfo";
+option optimize_for = SPEED;
+
+message Student {
+    required string name = 1;
+    optional int32 age = 2;
+    required string address = 3;
+}
