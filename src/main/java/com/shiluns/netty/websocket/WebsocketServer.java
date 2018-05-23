@@ -14,8 +14,8 @@ import io.netty.handler.logging.LoggingHandler;
 public class WebsocketServer {
 
     public static void main(String[] args) {
-        EventLoopGroup boss = new NioEventLoopGroup();
-        EventLoopGroup worker = new NioEventLoopGroup();
+        EventLoopGroup boss = new NioEventLoopGroup(1);
+        EventLoopGroup worker = new NioEventLoopGroup(1);
 
         ServerBootstrap serverBootstrap = new ServerBootstrap();
 

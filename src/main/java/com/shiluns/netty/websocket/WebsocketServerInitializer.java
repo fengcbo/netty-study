@@ -13,6 +13,8 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
  */
 public class WebsocketServerInitializer extends ChannelInitializer<SocketChannel> {
 
+    private static final HandlerEventExecutorGroup eventExecutorGroup = new HandlerEventExecutorGroup(500, 1500, 60 * 1000);
+
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
@@ -20,6 +22,6 @@ public class WebsocketServerInitializer extends ChannelInitializer<SocketChannel
         // Handler的泛型将变为 FullHttpRequest 或 FullHttpResponse
         pipeline.addLast(new HttpObjectAggregator(8096));
         pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
-        pipeline.addLast(new WebsocketServerHandler());
+        pipeline.addLast(eventExecutorGroup,new WebsocketServerHandler());
     }
 }

@@ -13,7 +13,9 @@ public class WebsocketServerHandler extends SimpleChannelInboundHandler<TextWebS
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
-        System.out.println("收到消息：" + msg.text());
+        System.out.println(ctx.channel().id().asShortText() + "收到消息：" + msg.text());
+        Thread.sleep(50000);
+        System.out.println(ctx.channel().id().asShortText() + "睡眠后");
         ctx.channel().writeAndFlush(new TextWebSocketFrame("时间：" + LocalDateTime.now()));
     }
 
