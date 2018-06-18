@@ -5,6 +5,7 @@ import io.netty.util.concurrent.DefaultEventExecutor;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import io.netty.util.concurrent.EventExecutor;
 import io.netty.util.concurrent.EventExecutorGroup;
+import io.netty.util.concurrent.FastThreadLocalThread;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.MultithreadEventExecutorGroup;
 import io.netty.util.concurrent.RejectedExecutionHandler;
@@ -123,7 +124,7 @@ public class HandlerEventExecutorGroup extends MultithreadEventExecutorGroup {
         private final AtomicInteger nextId = new AtomicInteger();
         @Override
         public Thread newThread(Runnable r) {
-            return new Thread(r, BussinessThreadFactory.class.getSimpleName() + nextId.incrementAndGet());
+            return new FastThreadLocalThread(r, BussinessThreadFactory.class.getSimpleName() + nextId.incrementAndGet());
         }
     }
 
@@ -133,7 +134,7 @@ public class HandlerEventExecutorGroup extends MultithreadEventExecutorGroup {
 
         @Override
         public Thread newThread(Runnable r) {
-            return new Thread(r, HandlerEventExecutorGroup.class.getSimpleName() + nextId.incrementAndGet());
+            return new FastThreadLocalThread(r, HandlerEventExecutorGroup.class.getSimpleName() + nextId.incrementAndGet());
         }
     }
 }
